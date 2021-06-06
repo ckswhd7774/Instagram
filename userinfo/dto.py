@@ -9,3 +9,8 @@ class SignupDto :
     name : str
     introduce : str
     address : str
+
+@dataclass
+class LoginDto :
+    userid : str
+    password : str

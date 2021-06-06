@@ -4,7 +4,7 @@ from django.views import View
 from django.contrib import auth
 from django.views import generic
 
-from userinfo.dto import SignupDto
+from userinfo.dto import SignupDto, LoginDto
 # Create your views here.
 
 class IndexTemplateView(generic.TemplateView):
@@ -30,4 +30,22 @@ class SignupView(View) :
             name=post_data['name'],
             introduce=post_data['introduce'],
             address=post_data['address']
+        )
+
+class LoginView(View) :
+    def get(self, request, *args, **kwargs) :
+        return render(request, 'index.html')
+
+    def post(self, request, *args, **kwargs) :
+        login_dto = self._build_login_dto(request.POST)
+        result = UserService.login(login_dto)
+
+        auth.login(request, result['user'])
+        return redirect('social:userlist')
+
+    @staticmethod
+    def _build_login_dto(poas_data) :
+        return LoginDto (
+            userid=poas_data['userid'],
+            password=poas_data['password']
         )
