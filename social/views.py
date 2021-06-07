@@ -1,10 +1,13 @@
+from django.http import request
 from django.views import View
 from django.shortcuts import render, redirect
-from social.service import ArticleService
-from userinfo.dto import ArticleDto
 from django.contrib.auth.models import  User
 from django.shortcuts import render
 from django.views import generic
+
+from social.service import ArticleService
+from social.models import Article
+from userinfo.dto import ArticleDto
 # Create your views here.
 
 class UserlistView(generic.ListView) :
@@ -22,7 +25,7 @@ class ArticleView(View) :
         return render(request, 'mypage.html')
 
     def post(self, request, *args, **kwargs) :
-        article_dto = self._build_article_dto(request.POST)
+        article_dto = self._build_article_dto(self, request.POST)
         ArticleService.article(article_dto)
 
         return redirect('userinfo:mypage',kwargs['pk'])
@@ -32,5 +35,5 @@ class ArticleView(View) :
         return ArticleDto (
             title=post_data['title'],
             article=post_data['article'],
-            user=User.objects.filter(pk=self.kwargs['pk']).first()
+            user=User.objects.filter(pk=self.kwargs['pk']).first(),
         )

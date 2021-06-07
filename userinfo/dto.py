@@ -20,3 +20,9 @@ class ArticleDto :
     title : str
     article : str
     user : User
+
+@dataclass
+class EditDto :
+    name : str
+    introduce : str
+    address : str

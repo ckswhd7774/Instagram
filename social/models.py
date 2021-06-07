@@ -9,7 +9,7 @@ from behaviors import BaseFiled
 class Article(BaseFiled) :
     title = models.CharField(max_length=64)
     article = models.TextField()
-    user = ForeignKey(Profile, on_delete=models.CASCADE, related_name='article_user', null=True, blank=True)
+    user = ForeignKey(User, on_delete=models.CASCADE, related_name='article', null=True, blank=True)
 
 
 class Comment(BaseFiled) :

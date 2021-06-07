@@ -6,7 +6,7 @@ from django.views import View
 from django.contrib import auth
 from django.views import generic
 
-from userinfo.dto import SignupDto, LoginDto
+from userinfo.dto import SignupDto, LoginDto, EditDto
 # Create your views here.
 
 class IndexTemplateView(generic.TemplateView):
@@ -48,7 +48,6 @@ class LoginView(View) :
         login_dto = self._build_login_dto(request.POST)
         result = UserService.login(login_dto)
 
-
         auth.login(request, result['user'])
         return redirect('social:userlist')
 
@@ -63,5 +62,17 @@ def logout(request) :
     auth.logout(request)
     return redirect('index')
 
+class EditView(View) :
+    def get(self, request, *args, **kwargs) :
+        pass
 
+    def post(self, request, *args, **kwargs) :
+        pass
 
+    @staticmethod
+    def _build_edit_dto(post_data) :
+        return EditDto (
+            name=post_data['name'],
+            introduce=post_data['introduce'],
+            address=post_data['address']
+        )

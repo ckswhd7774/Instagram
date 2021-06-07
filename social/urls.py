@@ -8,5 +8,5 @@ app_name = 'social'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('userlist/', UserlistView.as_view() ,name='userlist'),
-    path('article/', ArticleView.as_view(), name='article'),
+    path('article/<pk>', ArticleView.as_view(), name='article'),
 ]
