@@ -12,7 +12,6 @@ ERROR_MSG = {
 }
 
 class UserService():
-
     @staticmethod
     def signup(dto:SignupDto) :
         # 팝업창으로 모든 항목 체크, 아이디 중복 체크, 비밀번호체크 구현

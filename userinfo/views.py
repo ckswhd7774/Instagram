@@ -1,3 +1,5 @@
+from userinfo.models import Profile
+from django.contrib.auth.models import User
 from userinfo.service import UserService
 from django.shortcuts import redirect, render
 from django.views import View
@@ -9,6 +11,12 @@ from userinfo.dto import SignupDto, LoginDto
 
 class IndexTemplateView(generic.TemplateView):
     template_name='index.html'
+
+class UserDetailView(generic.DetailView) :
+    model = User
+    context_object_name = 'user'
+    template_name = 'mypage.html'
+
 
 class SignupView(View) :
     def get(self, request, *args, **kwargs) :
@@ -40,6 +48,7 @@ class LoginView(View) :
         login_dto = self._build_login_dto(request.POST)
         result = UserService.login(login_dto)
 
+
         auth.login(request, result['user'])
         return redirect('social:userlist')
 
@@ -49,3 +58,10 @@ class LoginView(View) :
             userid=poas_data['userid'],
             password=poas_data['password']
         )
+
+def logout(request) :
+    auth.logout(request)
+    return redirect('index')
+
+
+

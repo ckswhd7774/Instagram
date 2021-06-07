@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-
+from django.contrib.auth.models import User
 
 @dataclass
 class SignupDto :
@@ -14,3 +14,9 @@ class SignupDto :
 class LoginDto :
     userid : str
     password : str
+
+@dataclass
+class ArticleDto :
+    title : str
+    article : str
+    user : User

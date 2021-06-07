@@ -1,0 +1,25 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h1>My page</h1>
+<h2>유저 닉네임 : {{user}}</h2>
+
+<p>프로필 편집</p>
+
+<p>게시물 ?   팔로워 ?    팔로우  ?</p>
+
+<p>유저 이름</p>
+
+<h3>게시물</h3>
+
+<!-- 만약 이 계정의 유저와 현재 접속한 유저가 같다라면 게시물 작성 가능 -->
+<form action="{% url 'social:article' %}" method="POST">
+    <input type="text" name="title" placeholder="제목">
+    <input type="text" name="article" placeholder="내용">
+    <button>게시물 작성하기</button>
+</form>
+
+
+
+
+{% endblock content%}
