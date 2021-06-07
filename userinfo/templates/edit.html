@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Edit page</h1>
+
+<form action="{% url 'social:edit' user.profile.pk %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="name" placeholder="이름" value="{{user.profile.name}}">
+    <textarea name="introduce" placeholder="자기 소개">{{user.profile.introduce}}</textarea>
+    <input type="text" name="address" placeholder="메일 주소" value="{{user.profile.address}}">
+    <button type="submit">수정하기</button>
+</form>
+
+
+{% endblock content %}

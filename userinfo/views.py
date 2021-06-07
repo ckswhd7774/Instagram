@@ -62,17 +62,3 @@ def logout(request) :
     auth.logout(request)
     return redirect('index')
 
-class EditView(View) :
-    def get(self, request, *args, **kwargs) :
-        pass
-
-    def post(self, request, *args, **kwargs) :
-        pass
-
-    @staticmethod
-    def _build_edit_dto(post_data) :
-        return EditDto (
-            name=post_data['name'],
-            introduce=post_data['introduce'],
-            address=post_data['address']
-        )

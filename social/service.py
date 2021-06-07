@@ -1,4 +1,5 @@
-from userinfo.dto import ArticleDto
+from userinfo.models import Profile
+from userinfo.dto import ArticleDto, EditDto
 from social.models import Article
 
 class ArticleService():
@@ -13,3 +14,12 @@ class ArticleService():
     @staticmethod
     def find_all():
         return Article.objects.all()
+
+class EditService() :
+    @staticmethod
+    def edit(dto:EditDto) :
+        Profile.objects.filter(pk=dto.pk).update(
+            name=dto.name,
+            introduce=dto.introduce,
+            address=dto.address
+        )

@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 from userinfo.models import Profile
 from userinfo.dto import SignupDto, LoginDto
 
@@ -12,6 +13,11 @@ ERROR_MSG = {
 }
 
 class UserService():
+
+    @staticmethod
+    def find_by_user(user_pk):
+        return get_object_or_404(User,pk=user_pk)
+
     @staticmethod
     def signup(dto:SignupDto) :
         # 팝업창으로 모든 항목 체크, 아이디 중복 체크, 비밀번호체크 구현

@@ -2,7 +2,10 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>My page</h1> 
-<h2>유저 닉네임 : {{user.profile.name}}</h2> <a href="{% url 'userinfo:edit' user.pk%}">프로필 편집</a>
+<h2>유저 닉네임 : {{user.profile.name}}</h2> 
+{% if request.user == user %}
+<a href="{% url 'social:edit' user.pk%}">프로필 편집</a>
+{% endif %}
 <h3>소개글 : {{user.profile.introduce}}</h3>
 <h3>메일 주소 : {{user.profile.address}}</h3>
 

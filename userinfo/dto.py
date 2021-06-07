@@ -26,3 +26,4 @@ class EditDto :
     name : str
     introduce : str
     address : str
+    pk:str
