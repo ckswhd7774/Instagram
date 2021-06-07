@@ -2,16 +2,26 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>My page</h1> 
-<h2>유저 닉네임 : {{user.profile.name}}</h2> 
+<h2>유저 닉네임 : {{user.profile.name}}</h2>
+{{ request.user}} - {{user.relationship.followers.all}}
+
+<form action="{% url 'social:relationship' user.pk %}" method="POST">
+    {% csrf_token %}
+    {% if request.user in user.relationship.followers.all %}
+    <button type="submit">팔로우 취소</button>
+    {% else %}
+    <button type="submit">팔로우</button>
+</form><br><br>
+
+{% endif %}
 {% if request.user == user %}
-<a href="{% url 'social:edit' user.pk%}">프로필 편집</a>
+<a href="{% url 'social:edit' user.pk %}">프로필 편집</a>
 {% endif %}
 <h3>소개글 : {{user.profile.introduce}}</h3>
 <h3>메일 주소 : {{user.profile.address}}</h3>
 
-<p>게시물 ?   팔로워 ?    팔로우  ?</p>
+<p>게시물 ??   팔로워 ??    팔로우  ??</p>
 
-<p>유저 이름</p>
 
 <ul><h3>게시물</h3></ul>
 {%for article in user.article.all%}

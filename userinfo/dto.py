@@ -27,3 +27,9 @@ class EditDto :
     introduce : str
     address : str
     pk:str
+
+
+@dataclass
+class RelateDto :
+    user_pk : str
+    requester : User

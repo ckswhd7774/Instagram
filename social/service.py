@@ -1,6 +1,8 @@
+from django.contrib.auth.models import User
+
 from userinfo.models import Profile
-from userinfo.dto import ArticleDto, EditDto
-from social.models import Article
+from userinfo.dto import ArticleDto, EditDto, RelateDto
+from social.models import Article, Relationship
 
 class ArticleService():
     @staticmethod
@@ -23,3 +25,17 @@ class EditService() :
             introduce=dto.introduce,
             address=dto.address
         )
+
+
+class RelateService() :
+    @staticmethod
+    def toggle(dto:RelateDto) :
+        users = User.objects.filter(pk=dto.user_pk).first()
+        relationship = Relationship.objects.filter(users=users).first()
+
+        if relationship is None :
+            relationship = Relationship.objects.create(users=users)
+        if (dto.requester) in (relationship.followers.all()) :
+            relationship.followers.remove(dto.requester)
+        else :
+            relationship.followers.add(dto.requester)

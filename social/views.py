@@ -1,4 +1,3 @@
-from userinfo.service import UserService
 from django.http import request
 from django.views import View
 from django.shortcuts import render, redirect
@@ -6,8 +5,10 @@ from django.contrib.auth.models import  User
 from django.shortcuts import render
 from django.views import generic
 
-from social.service import ArticleService, EditService
-from userinfo.dto import ArticleDto, EditDto
+from social.service import ArticleService, EditService, RelateService
+
+from userinfo.service import UserService
+from userinfo.dto import ArticleDto, EditDto, RelateDto
 # Create your views here.
 
 class UserlistView(generic.ListView) :
@@ -57,4 +58,21 @@ class EditView(View) :
             introduce=post_data['introduce'],
             address=post_data['address'],
             pk=self.kwargs['pk']
+        )
+
+class RelationshipView(View) :
+    def get(self, request, *args, **kwargs) :
+        return render(request, 'userinfo:mypage')
+
+    def post(self, request, *args, **kwargs) :
+        relate_dto = self._build_relate_dto(self, request)
+        RelateService.toggle(relate_dto)
+
+        return redirect('userinfo:mypage', kwargs['pk'])
+
+    @staticmethod
+    def _build_relate_dto(self, request) :
+        return RelateDto (
+            user_pk=self.kwargs['pk'],
+            requester=request.user
         )
