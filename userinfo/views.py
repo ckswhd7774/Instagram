@@ -1,10 +1,14 @@
-from userinfo.models import Profile
+from django import forms
 from django.contrib.auth.models import User
+from userinfo.models import Profile
 from userinfo.service import UserService
 from django.shortcuts import redirect, render
 from django.views import View
 from django.contrib import auth
 from django.views import generic
+from django.core.files.storage import FileSystemStorage
+from django.urls import reverse_lazy
+from .forms import ArticleForm
 
 from userinfo.dto import SignupDto, LoginDto, EditDto
 # Create your views here.
@@ -62,3 +66,20 @@ def logout(request) :
     auth.logout(request)
     return redirect('index')
 
+
+
+
+
+# class ArticleListView(generic.ListView) :
+#     modle = Article
+#     template_name = 'article_list.html'
+#     context_object_name = 'articles'
+
+#     def get_queryset(self) :
+#         return Article.objects.order_by()
+
+# class UploadArticleView(generic.CreateView) :
+#     model = Article
+#     form_class = ArticleForm
+#     success_url = reverse_lazy('article_list')
+#     template_name = 'upload_article.html'

@@ -10,7 +10,7 @@ class ArticleService():
         Article.objects.create(
             title=dto.title,
             article=dto.article,
-            user=dto.user
+            user=dto.user,
         )
 
     @staticmethod

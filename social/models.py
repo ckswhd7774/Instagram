@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import SET_NULL
 from django.db.models.fields.related import ForeignKey, OneToOneField
-from userinfo.models import Profile
 from behaviors import BaseFiled
 # Create your models here.
 
@@ -10,6 +9,12 @@ class Article(BaseFiled) :
     title = models.CharField(max_length=64)
     article = models.TextField()
     user = ForeignKey(User, on_delete=models.CASCADE, related_name='article', null=True, blank=True)
+    image = models.ImageField(upload_to='image/', blank=True, null=True)
+
+# 이미지 업로드
+class Photo(BaseFiled) :
+    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True, related_name='photo')
+    image = models.ImageField(upload_to='image/', blank=True, null=True)
 
 
 class Comment(BaseFiled) :

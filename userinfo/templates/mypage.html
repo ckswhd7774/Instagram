@@ -1,5 +1,9 @@
 
 {% extends 'base.html' %}
+{% block head %}
+<a href="{% url 'userinfo:logout' %}">로그아웃</a><br><br>
+<a href="{% url 'social:userlist' %}">뒤로 가기</a>
+{% endblock head%}
 {% block content %}
 <h1>My page</h1> 
 <h2>유저 닉네임 : {{user.profile.name}}</h2>
@@ -27,15 +31,12 @@
 {%for article in user.article.all%}
 <li>{{article.title}} : {{article.article}}</li>
 {% endfor %}
-{% if request.user == user %}
-<form action="{% url 'social:article' user.pk%}" method="POST">
-    {% csrf_token %}
-    <input type="text" name="title" placeholder="제목">
-    <input type="text" name="article" placeholder="내용">
-    <button type="submit">게시물 작성하기</button>
-</form>
-{% endif %}
 
-
-
+<h1>게시물 리스트 페이지</h1>
+<p>
+    <a href="{% url 'social:upload_article' %}">게시물 업로드</a>
+</p>
+{% for photo in user.article.photo_set.all %}
+    <img src="{{user.photo.image.url}}" width="50">
+{% endfor %}
 {% endblock content%}
