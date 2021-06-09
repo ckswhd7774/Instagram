@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
 
 from userinfo.models import Profile
-from userinfo.dto import ArticleDto, EditDto, RelateDto
-from social.models import Article, Relationship
+from userinfo.dto import ArticleDto, CommentDto, EditDto, RelateDto
+from social.models import Article, Comment ,Relationship
 
 class ArticleService():
     @staticmethod
@@ -26,6 +26,14 @@ class EditService() :
             address=dto.address
         )
 
+class CommentService() :
+    @staticmethod
+    def comment(dto:CommentDto) :
+        Comment.objects.create(
+            content=dto.content,
+            owner=dto.owner,
+            writer=dto.writer
+        )
 
 class RelateService() :
     @staticmethod

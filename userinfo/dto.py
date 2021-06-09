@@ -28,6 +28,12 @@ class EditDto :
     address : str
     pk:str
 
+@dataclass
+class CommentDto :
+    owner : User
+    writer : User
+    content : str
+
 
 @dataclass
 class RelateDto :

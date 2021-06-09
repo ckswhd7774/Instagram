@@ -11,6 +11,9 @@ class Article(BaseFiled) :
     user = ForeignKey(User, on_delete=models.CASCADE, related_name='article', null=True, blank=True)
     image = models.ImageField(upload_to='image/', blank=True, null=True)
 
+    def __str__(self):
+        return (self.user.username + "/" + self.title)
+
 # 이미지 업로드
 class Photo(BaseFiled) :
     article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True, related_name='photo')
@@ -19,9 +22,9 @@ class Photo(BaseFiled) :
 
 class Comment(BaseFiled) :
     # 어떤 글에 대한 댓글인가 / 댓글에 대한 게시물
-    owner = models.ForeignKey(Article, on_delete=SET_NULL, related_name='owner', null=True, blank=True)
+    owner = models.ForeignKey(User, on_delete=SET_NULL, related_name='owner', null=True, blank=True)
     # 댓글 쓴 사람
-    writer = models.ForeignKey(Article, on_delete=SET_NULL, related_name='writer', null=True, blank=True)
+    writer = models.ForeignKey(User, on_delete=SET_NULL, related_name='writer', null=True, blank=True)
     content = models.TextField()
 
 

@@ -27,12 +27,11 @@
 <p>게시물 ??   팔로워 ??    팔로우  ??</p>
 
 
-<ul><h3>게시물</h3></ul>
+<ul><h2>게시물 리스트</h2></ul>
 {%for article in user.article.all%}
-<li>{{article.title}} : {{article.article}}</li>
+<li><a href="{% url 'social:article_detail' article.pk %}">{{article.title}} : {{article.article}}</a></li>
 {% endfor %}
 
-<h1>게시물 리스트 페이지</h1>
 <p>
     <a href="{% url 'social:upload_article' %}">게시물 업로드</a>
 </p>
