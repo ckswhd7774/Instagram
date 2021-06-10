@@ -23,12 +23,15 @@ class Comment(BaseFiled) :
     content = models.TextField()
 
 
-class Like(BaseFiled) :
-    # 게시글에 대한 좋아요
-    article = models.OneToOneField(Article, on_delete=SET_NULL, related_name='like_article', null=True, blank=True)
+class LikeComment(BaseFiled) :
     # 댓글에 대한 좋아요
     comment = models.OneToOneField(Comment, on_delete=SET_NULL, related_name='like_comment', null=True, blank=True)
-    users = models.ManyToManyField(User, related_name='like', blank=True)
+    users = models.ManyToManyField(User, related_name='like_comment', blank=True)
+
+class LikeArticle(BaseFiled) :
+    # 게시글에 대한 좋아요
+    article = models.OneToOneField(Article, on_delete=SET_NULL, related_name='like_article', null=True, blank=True)
+    users = models.ManyToManyField(User, related_name='like_article', blank=True)
 
 
 class Relationship(BaseFiled) :

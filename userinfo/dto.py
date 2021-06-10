@@ -35,6 +35,12 @@ class CommentDto :
     writer : User
     content : str
 
+@dataclass
+class LikeDto :
+    article_pk : str
+    comment_pk : str
+    users : User
+
 
 @dataclass
 class RelateDto :

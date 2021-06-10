@@ -26,7 +26,7 @@
 
 <p>게시물 ??   팔로워 ??    팔로우  ??</p>
 
-<a href="{% url 'social:upload_article2' %}">게시물 업로드</a>
+<a href="{% url 'social:upload_article' %}">게시물 업로드</a>
 
 <ul><h2>게시물 리스트</h2></ul>
 {%for article in user.article.all%}
@@ -37,7 +37,4 @@
 </li>
     {% endif %}
 {% endfor %}
-
-<p>
-</p>
 {% endblock content%}

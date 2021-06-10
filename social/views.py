@@ -1,17 +1,14 @@
-from django.core.files.storage import FileSystemStorage
 from django.http import request
 from django.views import View
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import  User
 from django.shortcuts import render
 from django.views import generic
-from django.urls import reverse_lazy
 from .models import Article
 
 from social.service import ArticleService, CommentService, EditService, RelateService
 
 from userinfo.service import UserService
-from userinfo.forms import ArticleForm
 from userinfo.dto import EditDto, RelateDto, CommentDto, ArticleDto
 
 # Create your views here.
@@ -96,21 +93,6 @@ class UploadArticleView(View) :
         image=request.FILES.get('image', None)
         )
 
-
-def create(request) :
-    if request.method == 'POST' :
-        new_article = Article(
-        title=request.POST.get('title', 'NO TITLE'), 
-        user = request.user, 
-        article=request.POST.get('article', 'NO CONTENT'), 
-        image=request.FILES.get('image', None))
-        new_article.save()
-
-        return redirect('social:article_list')
-    else :
-        return render(request, 'upload_article.html')
-            
-
 class CommentView(View) :
     def get(self, request, *args, **kwargs) :
         return render(request, 'article_detail.html')
@@ -128,6 +110,21 @@ class CommentView(View) :
             writer=request.user,
             content=request.POST['content']
         )
+
+class LikeView(View) :
+    def get(self, request, *args, **kwargs) :
+        pass
+
+    def post(self, request, *args, **kwargs) :
+        pass
+
+    @staticmethod
+    def _build_like_dto(self, request) :
+        return LikeDto(
+
+        )
+
+
     
 
 class RelationshipView(View) :
