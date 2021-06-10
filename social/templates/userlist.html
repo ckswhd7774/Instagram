@@ -5,7 +5,7 @@
 <ul>
     {%for user in userlist %}
     <li>
-        <a href="{% url 'userinfo:mypage' user.pk %}">{{user}}</a>
+        <a href="{% url 'social:mypage' user.pk %}">{{user}}</a>
     </li>
 </ul>
 {% endfor %}

@@ -21,7 +21,6 @@ class UserDetailView(generic.DetailView) :
     context_object_name = 'user'
     template_name = 'mypage.html'
 
-
 class SignupView(View) :
     def get(self, request, *args, **kwargs) :
         return render(request, 'signup.html')
@@ -65,21 +64,3 @@ class LoginView(View) :
 def logout(request) :
     auth.logout(request)
     return redirect('index')
-
-
-
-
-
-# class ArticleListView(generic.ListView) :
-#     modle = Article
-#     template_name = 'article_list.html'
-#     context_object_name = 'articles'
-
-#     def get_queryset(self) :
-#         return Article.objects.order_by()
-
-# class UploadArticleView(generic.CreateView) :
-#     model = Article
-#     form_class = ArticleForm
-#     success_url = reverse_lazy('article_list')
-#     template_name = 'upload_article.html'

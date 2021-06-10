@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import SET_NULL
 from django.db.models.fields.related import ForeignKey, OneToOneField
+from django.shortcuts import redirect
 from behaviors import BaseFiled
 # Create your models here.
 
@@ -13,12 +14,6 @@ class Article(BaseFiled) :
 
     def __str__(self):
         return (self.user.username + "/" + self.title)
-
-# 이미지 업로드
-class Photo(BaseFiled) :
-    article = models.ForeignKey(Article, on_delete=models.CASCADE, null=True, related_name='photo')
-    image = models.ImageField(upload_to='image/', blank=True, null=True)
-
 
 class Comment(BaseFiled) :
     # 어떤 글에 대한 댓글인가 / 댓글에 대한 게시물

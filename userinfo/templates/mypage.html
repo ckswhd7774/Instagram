@@ -26,16 +26,18 @@
 
 <p>게시물 ??   팔로워 ??    팔로우  ??</p>
 
+<a href="{% url 'social:upload_article2' %}">게시물 업로드</a>
 
 <ul><h2>게시물 리스트</h2></ul>
 {%for article in user.article.all%}
-<li><a href="{% url 'social:article_detail' article.pk %}">{{article.title}} : {{article.article}}</a></li>
+<li>{%if article.image %}
+    <a href="{% url 'social:article_detail' article.pk %}">
+        <img  src="{{article.image.url}}" alt="{{article.title}}" width="250px;">
+    <a>
+</li>
+    {% endif %}
 {% endfor %}
 
 <p>
-    <a href="{% url 'social:upload_article' %}">게시물 업로드</a>
 </p>
-{% for photo in user.article.photo_set.all %}
-    <img src="{{user.photo.image.url}}" width="50">
-{% endfor %}
 {% endblock content%}

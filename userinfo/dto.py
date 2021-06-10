@@ -20,6 +20,7 @@ class ArticleDto :
     title : str
     article : str
     user : User
+    image : str
 
 @dataclass
 class EditDto :

@@ -11,6 +11,7 @@ class ArticleService():
             title=dto.title,
             article=dto.article,
             user=dto.user,
+            imnage=dto.image
         )
 
     @staticmethod
