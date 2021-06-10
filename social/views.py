@@ -35,7 +35,7 @@ class ArticleListView(generic.ListView):
         return render(request, 'mypage.html')
 
     def post(self, request, *args, **kwargs):
-        article_dto = self._build_article_dto(self, request.POST)
+        article_dto = self._build_article_dto(self, request)
         ArticleService.article(article_dto)
 
         return redirect('social:mypage', kwargs['pk'])
