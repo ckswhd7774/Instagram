@@ -5,28 +5,29 @@ from django.contrib.auth.models import  User
 from django.shortcuts import render
 from django.views import generic
 from .models import Article
+from userinfo.models import Profile
 
-from social.service import ArticleService, CommentService, EditService, RelateService
+from social.service import ArticleService, CommentService, EditService, LikeService, RelateService
 
 from userinfo.service import UserService
-from userinfo.dto import EditDto, RelateDto, CommentDto, ArticleDto
+from userinfo.dto import EditDto, RelateDto, CommentDto, ArticleDto, LikeDto
 
 # Create your views here.
 
 class UserlistView(generic.ListView) :
-    model = User
+    model = Profile
     template_name = 'userlist.html'
     context_object_name = 'userlist'
 
-    def get_context_data(self, **kwargs) :
-        context = super().get_context_data(**kwargs)
-        context['user_list'] = User.objects.all()
-        return context
+    # def get_context_data(self, **kwargs) :
+    #     context = super().get_context_data(**kwargs)
+    #     context['user_list'] = UserService.find_by_user(self.kwargs['pk'])
+    #     return context
 
-class ArticleListView(generic.ListView):
+class MypageView(generic.DetailView):
     model = Article
     template_name = 'mypage.html'
-    context_object_name = 'articles'
+    context_object_name = 'mypage'
 
     def get(self, request, *args, **kwargs) :
         return render(request, 'mypage.html')
@@ -45,14 +46,15 @@ class ArticleListView(generic.ListView):
         article=request.POST.get('article', 'NO CONTENT'), 
         image=request.FILES.get('image', None)
         )
+    # def get_queryset(self) :
+    #     return Article.objects.order_by()
 
-    def get_queryset(self) :
-        return Article.objects.order_by()
 
 class ArticleDetailView(generic.DetailView) :
     model = Article
     context_object_name = 'article'
     template_name = 'article_detail.html'
+
 
 class EditView(View) :
     def get(self, request, *args, **kwargs) :
@@ -63,7 +65,7 @@ class EditView(View) :
         edit_dto = self._build_edit_dto(self, request.POST)
         EditService.edit(edit_dto)
         
-        return redirect('userinfo:mypage', kwargs['pk'])
+        return redirect('social:mypage', kwargs['pk'])
 
     @staticmethod
     def _build_edit_dto(self, post_data) :
@@ -98,7 +100,7 @@ class CommentView(View) :
         return render(request, 'article_detail.html')
 
     def post(self, request, *args, **kwargs) :
-        comment_dto = self._build_comment_dto(self, request)
+        comment_dto = self._build_comment_dto(self,request)
         CommentService.comment(comment_dto)
 
         return redirect('social:article_detail', kwargs['pk'])
@@ -108,34 +110,35 @@ class CommentView(View) :
         return CommentDto (
             owner=User.objects.filter(pk=self.kwargs['pk']).first(),
             writer=request.user,
-            content=request.POST['content']
+            content=request.POST['content'],
+            article=Article.objects.filter(pk=self.kwargs['pk']).first()
         )
 
-class LikeView(View) :
+class CommentLikeView(View) :
     def get(self, request, *args, **kwargs) :
-        pass
+        return render(request, 'article_detail.html')
 
     def post(self, request, *args, **kwargs) :
-        pass
+        like_dto = self._build_like_dto(self, request)
+        LikeService.toggle(like_dto)
+        return redirect('social:article_detail', kwargs['pk'])
 
     @staticmethod
     def _build_like_dto(self, request) :
         return LikeDto(
-
+            comment_pk=self.kwargs['pk'],
+            users=request.user
         )
-
-
-    
 
 class RelationshipView(View) :
     def get(self, request, *args, **kwargs) :
-        return render(request, 'userinfo:mypage')
+        return render(request, 'social:mypage')
 
     def post(self, request, *args, **kwargs) :
         relate_dto = self._build_relate_dto(self, request)
         RelateService.toggle(relate_dto)
 
-        return redirect('userinfo:mypage', kwargs['pk'])
+        return redirect('social:mypage', kwargs['pk'])
 
     @staticmethod
     def _build_relate_dto(self, request) :

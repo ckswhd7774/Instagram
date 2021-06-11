@@ -2,13 +2,24 @@
 {% block content %}
 <h1>{{article.user}}의 게시물 디테일 페이지</h1>
 <p>제목 : {{article.title}} 글 :  {{article.article}}  </p> <br>
-{% if article.image%}
+{% if article.image %}
 <img src="{{article.image.url}}" width="500px;" alt="{{article.title}}">
+<h2>게시물 좋아요</h2>
+<form action="" method="POST">
+    <button>게시물 좋아요</button>
+</form>
 {% endif %}
 <h2>댓글</h2>
-
 {%for comment in user.writer.all%}
 <li>{{comment.content}} - 작성자 {{comment.writer}}</li>
+<form action="{% url 'social:like' comment.pk %}" method="POST">
+    {% csrf_token %}
+    {% if request.user in comment.like.users.all%}
+    <button type="submit">좋아요 취소</button>
+    {% else %}
+    <button type="submit">좋아요</button>
+    {% endif %}
+</form>
 {% endfor %}
 <form action="{% url 'social:comment' user.pk %}" method="POST">
     {% csrf_token %}

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.deletion import SET_NULL
 from django.db.models.fields.related import ForeignKey, OneToOneField
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from behaviors import BaseFiled
 # Create your models here.
 
@@ -13,9 +13,10 @@ class Article(BaseFiled) :
     image = models.ImageField(upload_to='image/', blank=True, null=True)
 
     def __str__(self):
-        return (self.user.username + "/" + self.title)
+        return (f"{self.id}" + "by " + self.user.username + "/" + self.title)
 
 class Comment(BaseFiled) :
+    article = models.ForeignKey(Article, on_delete=SET_NULL, related_name='comment', null=True, blank=True)
     # 어떤 글에 대한 댓글인가 / 댓글에 대한 게시물
     owner = models.ForeignKey(User, on_delete=SET_NULL, related_name='owner', null=True, blank=True)
     # 댓글 쓴 사람
@@ -25,7 +26,7 @@ class Comment(BaseFiled) :
 
 class LikeComment(BaseFiled) :
     # 댓글에 대한 좋아요
-    comment = models.OneToOneField(Comment, on_delete=SET_NULL, related_name='like_comment', null=True, blank=True)
+    comment = models.OneToOneField(Comment, on_delete=SET_NULL, related_name='like', null=True, blank=True)
     users = models.ManyToManyField(User, related_name='like_comment', blank=True)
 
 class LikeArticle(BaseFiled) :

@@ -11,7 +11,7 @@ from django.urls import reverse_lazy
 from .forms import ArticleForm
 
 from userinfo.dto import SignupDto, LoginDto, EditDto
-# Create your views here.
+# Create your views here.``
 
 class IndexTemplateView(generic.TemplateView):
     template_name='index.html'

@@ -7,6 +7,10 @@
     <title>Document</title>
 </head>
 <body>
+    {% if user.is_authenticated %}
+        welcoem {{user.username}}
+        <a href="{% url 'userinfo:logout' %}">로그아웃</a><br><br>
+    {% else %}
     <h1>index : 로그인 페이지 </h1>
     
     <form action="{% url 'userinfo:login' %}" method="POST">
@@ -19,6 +23,8 @@
     <a href="">비밀번호 찾기</a>
     
     <a href="{% url 'userinfo:signup' %}">회원가입하기</a>
+    {% endif %}
+    
 </body>
 </html>
 

@@ -1,5 +1,5 @@
 from django.urls import path
-from userinfo.views import SignupView, LoginView, UserDetailView, logout
+from userinfo.views import SignupView, LoginView, logout
 from social import views
 
 
@@ -9,7 +9,7 @@ urlpatterns = [
     path('', LoginView.as_view(), name='login'),
     path('signup/', SignupView.as_view(), name='signup'),
     path('logout/', logout, name='logout'),
-    path('mypage/<int:pk>', UserDetailView.as_view(), name='mypage'),
+    # path('mypage/<int:pk>', UserDetailView.as_view(), name='mypage'),
     
 
     # path('article_list/', ArticleListView.as_view(), name='article_list'),
