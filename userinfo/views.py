@@ -19,7 +19,7 @@ class IndexTemplateView(generic.TemplateView):
 class UserDetailView(generic.DetailView) :
     model = User
     context_object_name = 'user'
-    template_name = 'mypage.html'
+    template_name = 'user_detail.html'
 
 class SignupView(View) :
     def get(self, request, *args, **kwargs) :

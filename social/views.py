@@ -16,7 +16,7 @@ from userinfo.dto import EditDto, RelateDto, CommentDto, ArticleDto, LikeDto
 
 class UserlistView(generic.ListView) :
     model = Profile
-    template_name = 'userlist.html'
+    template_name = 'user_list.html'
     context_object_name = 'userlist'
 
     # def get_context_data(self, **kwargs) :
@@ -24,19 +24,19 @@ class UserlistView(generic.ListView) :
     #     context['user_list'] = UserService.find_by_user(self.kwargs['pk'])
     #     return context
 
-class MypageView(generic.DetailView):
+class UserdetailView(generic.DetailView):
     model = Article
-    template_name = 'mypage.html'
-    context_object_name = 'mypage'
+    template_name = 'user_detail.html'
+    context_object_name = 'user_detail'
 
     def get(self, request, *args, **kwargs) :
-        return render(request, 'mypage.html')
+        return render(request, 'user_detail.html')
 
     def post(self, request, *args, **kwargs):
         article_dto = self._build_article_dto(self, request)
         ArticleService.article(article_dto)
 
-        return redirect('social:mypage', kwargs['pk'])
+        return redirect('social:user_detail', kwargs['pk'])
 
     @staticmethod
     def _build_article_dto(self, request) :
@@ -50,10 +50,10 @@ class MypageView(generic.DetailView):
     #     return Article.objects.order_by()
 
 
-class ArticleDetailView(generic.DetailView) :
+class PostDetailView(generic.DetailView) :
     model = Article
     context_object_name = 'article'
-    template_name = 'article_detail.html'
+    template_name = 'post_detail.html'
 
 
 class EditView(View) :
@@ -65,7 +65,7 @@ class EditView(View) :
         edit_dto = self._build_edit_dto(self, request.POST)
         EditService.edit(edit_dto)
         
-        return redirect('social:mypage', kwargs['pk'])
+        return redirect('social:user_list', kwargs['pk'])
 
     @staticmethod
     def _build_edit_dto(self, post_data) :
@@ -76,15 +76,15 @@ class EditView(View) :
             pk=self.kwargs['pk']
         )
 
-class UploadArticleView(View) :
+class UploadPostView(View) :
     def get(self, request, *args, **kwargs) :
-        return render(request, 'upload_article.html')
+        return render(request, 'upload_post.html')
 
     def post(self, request, *args, **kwargs):
         article_dto = self._build_article_dto(self, request.POST)
         ArticleService.article(article_dto)
 
-        return redirect('social:mypage', kwargs['pk'])
+        return redirect('social:user_list', kwargs['pk'])
 
     @staticmethod
     def _build_article_dto(self, request) :
@@ -97,13 +97,13 @@ class UploadArticleView(View) :
 
 class CommentView(View) :
     def get(self, request, *args, **kwargs) :
-        return render(request, 'article_detail.html')
+        return render(request, 'post_detail.html')
 
     def post(self, request, *args, **kwargs) :
         comment_dto = self._build_comment_dto(self,request)
         CommentService.comment(comment_dto)
 
-        return redirect('social:article_detail', kwargs['pk'])
+        return redirect('social:post_detail', kwargs['pk'])
 
     @staticmethod
     def _build_comment_dto(self, request) :
@@ -116,12 +116,12 @@ class CommentView(View) :
 
 class CommentLikeView(View) :
     def get(self, request, *args, **kwargs) :
-        return render(request, 'article_detail.html')
+        return render(request, 'post_detail.html')
 
     def post(self, request, *args, **kwargs) :
         like_dto = self._build_like_dto(self, request)
         LikeService.toggle(like_dto)
-        return redirect('social:article_detail', kwargs['pk'])
+        return redirect('social:post_detail', kwargs['pk'])
 
     @staticmethod
     def _build_like_dto(self, request) :
@@ -132,13 +132,13 @@ class CommentLikeView(View) :
 
 class RelationshipView(View) :
     def get(self, request, *args, **kwargs) :
-        return render(request, 'social:mypage')
+        return render(request, 'social:user_list')
 
     def post(self, request, *args, **kwargs) :
         relate_dto = self._build_relate_dto(self, request)
         RelateService.toggle(relate_dto)
 
-        return redirect('social:mypage', kwargs['pk'])
+        return redirect('social:user_list', kwargs['pk'])
 
     @staticmethod
     def _build_relate_dto(self, request) :

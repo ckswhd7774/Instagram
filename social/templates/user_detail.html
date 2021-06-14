@@ -2,7 +2,7 @@
 {% extends 'base.html' %}
 {% block head %}
 <a href="{% url 'userinfo:logout' %}">로그아웃</a><br><br>
-<a href="{% url 'social:userlist' %}">뒤로 가기</a>
+<a href="{% url 'social:user_list' %}">뒤로 가기</a>
 {% endblock head%}
 {% block content %}
 <h1>My page</h1> 
@@ -26,14 +26,14 @@
 
 <p>게시물 ??   팔로워 ??    팔로우  ??</p>
 
-<a href="{% url 'social:upload_article' %}">게시물 업로드</a>
+<a href="{% url 'social:upload_post' %}">게시물 업로드</a>
 
 
 <ul><h2>게시물 리스트</h2></ul>
 
 {%for article in user.article.all%}
 <li>{%if article.image %}
-    <a href="{% url 'social:article_detail' article.pk %}">
+    <a href="{% url 'social:post_detail' article.pk %}">
         <img  src="{{article.image.url}}" alt="{{article.title}}" width="250px;">
     <a>
 </li>
