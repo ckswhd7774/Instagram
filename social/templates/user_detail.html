@@ -5,9 +5,9 @@
 <a href="{% url 'social:user_list' %}">뒤로 가기</a>
 {% endblock head%}
 {% block content %}
-<h1>My page</h1> 
-<h2>유저 닉네임 : {{user.profile}}</h2>
+<h1>{{user.profile.name}}의 My Page</h1>
 {{ request.user}} - {{user.relationship.followers.all}}
+<h1>{{user_detail.name}}</h1>
 
 <form action="{% url 'social:relationship' user.pk %}" method="POST">
     {% csrf_token %}

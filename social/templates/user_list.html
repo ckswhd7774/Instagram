@@ -2,10 +2,9 @@
 {% block content %}
 <h1>안녕하세요 {{request.user}}님</h1>
 <h1>User List</h1>
-<ul>
     {%for user in userlist %}
     <li>
-        <a href="{% url 'social:user_detail' user.pk %}">{{user.name}}</a>
+        <a href="{% url 'social:user_detail' user.pk %}">{{user}}</a>
     </li>
 </ul>
 {% endfor %}

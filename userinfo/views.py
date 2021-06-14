@@ -16,11 +16,6 @@ from userinfo.dto import SignupDto, LoginDto, EditDto
 class IndexTemplateView(generic.TemplateView):
     template_name='index.html'
 
-class UserDetailView(generic.DetailView) :
-    model = User
-    context_object_name = 'user'
-    template_name = 'user_detail.html'
-
 class SignupView(View) :
     def get(self, request, *args, **kwargs) :
         return render(request, 'signup.html')
@@ -52,7 +47,7 @@ class LoginView(View) :
         result = UserService.login(login_dto)
 
         auth.login(request, result['user'])
-        return redirect('social:userlist')
+        return redirect('social:user_list')
 
     @staticmethod
     def _build_login_dto(poas_data) :
