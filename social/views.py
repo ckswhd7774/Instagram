@@ -5,7 +5,6 @@ from django.contrib.auth.models import  User
 from django.shortcuts import render
 from django.views import generic
 from .models import Article
-from userinfo.models import Profile
 
 from social.service import ArticleService, CommentService, EditService, LikeService, RelateService
 
@@ -20,7 +19,7 @@ class UserlistView(generic.ListView) :
     context_object_name = 'userlist'
 
 class UserdetailView(generic.DetailView):
-    model = Profile
+    model = User
     template_name = 'user_detail.html'
     context_object_name = 'user'
 
@@ -98,21 +97,21 @@ class CommentView(View) :
     def post(self, request, *args, **kwargs) :
         comment_dto = self._build_comment_dto(self,request)
         CommentService.comment(comment_dto)
-
-        return redirect('social:post_detail', kwargs['pk'])
+        owner = CommentService.find_owner(kwargs['pk'])
+        return redirect('social:post_detail', owner.pk)
 
     @staticmethod
     def _build_comment_dto(self, request) :
         return CommentDto (
-            owner=User.objects.filter(pk=self.kwargs['pk']).first(),
+            article_pk=self.kwargs['pk'],
+            owner=CommentService.find_owner(self.kwargs['pk']),
             writer=request.user,
             content=request.POST['content'],
-            article=Article.objects.filter(pk=self.kwargs['pk']).first()
         )
 
 class CommentLikeView(View) :
-    def get(self, request, *args, **kwargs) :
-        return render(request, 'post_detail.html')
+    # def get(self, request, *args, **kwargs) :
+    #     return render(request, 'post_detail.html')
 
     def post(self, request, *args, **kwargs) :
         like_dto = self._build_like_dto(self, request)
@@ -143,3 +142,4 @@ class RelationshipView(View) :
             requester=request.user
         )
 
+        

@@ -6,7 +6,6 @@
 {% endblock head%}
 {% block content %}
 <h1>{{user.profile.name}}의 My Page</h1>
-{{ request.user}} - {{user.relationship.followers.all}}
 <h1>{{user_detail.name}}</h1>
 
 <form action="{% url 'social:relationship' user.pk %}" method="POST">
@@ -23,15 +22,15 @@
 {% endif %}
 <h3>소개글 : {{user.profile.introduce}}</h3>
 <h3>메일 주소 : {{user.profile.address}}</h3>
-
-<p>게시물 ??   팔로워 ??    팔로우  ??</p>
-
+<p>게시물  {{user.article.count}}  팔로워 {{user.relationship.followers.all.count}}   </p>
+{% if request.user == user %}
 <a href="{% url 'social:upload_post' %}">게시물 업로드</a>
-
+{% endif %}
 
 <ul><h2>게시물 리스트</h2></ul>
 
 {%for article in user.article.all%}
+
 <li>{%if article.image %}
     <a href="{% url 'social:post_detail' article.pk %}">
         <img  src="{{article.image.url}}" alt="{{article.title}}" width="250px;">

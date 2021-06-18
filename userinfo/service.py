@@ -14,10 +14,6 @@ ERROR_MSG = {
 
 class UserService():
     @staticmethod
-    def find_by_article(user_pk) :
-        return User.objects.filter(user__profile__pk=user_pk)
-
-    @staticmethod
     def find_by_user(user_pk):
         return get_object_or_404(User, pk=user_pk)
 

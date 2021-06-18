@@ -31,10 +31,10 @@ class EditDto :
 
 @dataclass
 class CommentDto :
-    owner : User
+    article_pk : str
+    owner : str
     writer : User
     content : str
-    article : str
 
 @dataclass
 class LikeDto :

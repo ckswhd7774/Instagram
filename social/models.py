@@ -16,27 +16,26 @@ class Article(BaseFiled) :
         return (f"{self.id}" + "by " + self.user.username + "/" + self.title)
 
 class Comment(BaseFiled) :
-    article = models.ForeignKey(Article, on_delete=SET_NULL, related_name='comment', null=True, blank=True)
     # 어떤 글에 대한 댓글인가 / 댓글에 대한 게시물
-    owner = models.ForeignKey(User, on_delete=SET_NULL, related_name='owner', null=True, blank=True)
+    owner = models.ForeignKey(Article, on_delete=models.CASCADE, related_name='owner', null=True, blank=True)
     # 댓글 쓴 사람
-    writer = models.ForeignKey(User, on_delete=SET_NULL, related_name='writer', null=True, blank=True)
+    writer = models.ForeignKey(User, on_delete=models.SET_NULL, related_name='writer', null=True, blank=True)
     content = models.TextField()
 
 
 class LikeComment(BaseFiled) :
     # 댓글에 대한 좋아요
-    comment = models.OneToOneField(Comment, on_delete=SET_NULL, related_name='like', null=True, blank=True)
+    comment = models.OneToOneField(Comment, on_delete=models.SET_NULL, related_name='like', null=True, blank=True)
     users = models.ManyToManyField(User, related_name='like_comment', blank=True)
 
 class LikeArticle(BaseFiled) :
     # 게시글에 대한 좋아요
-    article = models.OneToOneField(Article, on_delete=SET_NULL, related_name='like_article', null=True, blank=True)
+    article = models.OneToOneField(Article, on_delete=models.SET_NULL, related_name='like_article', null=True, blank=True)
     users = models.ManyToManyField(User, related_name='like_article', blank=True)
 
 
 class Relationship(BaseFiled) :
-    users = models.OneToOneField(User, on_delete=SET_NULL, related_name='relationship' , null=True, blank=True)
+    users = models.OneToOneField(User, on_delete=models.SET_NULL, related_name='relationship' , null=True, blank=True)
     # 내가 팔로우 하고 있는 사람들
     followers = models.ManyToManyField(User, related_name='following', blank=True)
 

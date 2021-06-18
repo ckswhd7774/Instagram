@@ -8,7 +8,7 @@ app_name = 'social'
 urlpatterns = [
     # login required views
     path('uesrdetail/<int:pk>', UserdetailView.as_view(), name='user_detail'),
-    path('article_detail/<int:pk>', PostDetailView.as_view(), name='post_detail'),
+    path('post_detail/<int:pk>', PostDetailView.as_view(), name='post_detail'),
     path('userdetail/upload', UploadPostView.as_view(), name='upload_post'),
     path('edit/<pk>', EditView.as_view(), name='edit'),
     path('relationship/<pk>', RelationshipView.as_view(), name='relationship'),

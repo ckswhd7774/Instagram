@@ -16,9 +16,6 @@ class ArticleService():
             image=dto.image
         )
 
-    @staticmethod
-    def find_all():
-        return Article.objects.all()
 
 class EditService() :
     @staticmethod
@@ -30,13 +27,17 @@ class EditService() :
         )
 
 class CommentService() :
+
+    @staticmethod
+    def find_owner(article_pk) :
+        return get_object_or_404(Article, pk=article_pk)
+
     @staticmethod
     def comment(dto:CommentDto) :
         Comment.objects.create(
             content=dto.content,
             owner=dto.owner,
             writer=dto.writer,
-            article=dto.article
         )
 
 class LikeService() :
