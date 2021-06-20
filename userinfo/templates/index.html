@@ -20,7 +20,7 @@
         <button type="submit">로그인</button>
     </form>
     
-    <a href="">비밀번호 찾기</a>
+    <a href="{% url 'userinfo:send_email' %}">비밀번호 찾기</a>
     
     <a href="{% url 'userinfo:signup' %}">회원가입하기</a>
     {% endif %}

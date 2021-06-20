@@ -6,11 +6,8 @@ from django.shortcuts import redirect, render
 from django.views import View
 from django.contrib import auth
 from django.views import generic
-from django.core.files.storage import FileSystemStorage
-from django.urls import reverse_lazy
-from .forms import ArticleForm
-
-from userinfo.dto import SignupDto, LoginDto, EditDto
+from django.core.mail.message import EmailMessage
+from userinfo.dto import SignupDto, LoginDto
 # Create your views here.``
 
 class IndexTemplateView(generic.TemplateView):
@@ -59,3 +56,11 @@ class LoginView(View) :
 def logout(request) :
     auth.logout(request)
     return redirect('index')
+
+
+def send_email(request):
+    subject = "message"
+    to = ["id@gmail.com"]
+    from_email = "id@gmail.com"
+    message = "메지시 테스트"
+    EmailMessage(subject=subject, body=message, to=to, from_email=from_email).send()
