@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% if user.is_authenticated %}
 <h1>안녕하세요 {{request.user}}님</h1>
 <h1>User List</h1>
     {%for user in userlist %}

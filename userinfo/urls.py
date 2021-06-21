@@ -9,10 +9,11 @@ urlpatterns = [
     path('', LoginView.as_view(), name='login'),
     path('signup/', SignupView.as_view(), name='signup'),
     path('logout/', logout, name='logout'),
-    path('send_email/', views.send_email, name='send_email'),
-    path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
-    path('password_reset_done/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('password_reset_confirm/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('password_reset_complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+
+    # 비밀번호 찾기
+    path('recovery/pw/', views.RecoveryPwView.as_view(), name='recovery_pw'),
+    path('recovery/pw/find/', views.ajax_find_pw_view, name='ajax_pw'),
+    path('recovery/pw/auth/', views.auth_confirm_view, name='recovery_auth'),
+    path('recovery/pw/reset/', views.auth_pw_reset_view, name='recovery_pw_reset'),
     
 ]

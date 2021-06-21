@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+<link rel="stylesheet" href="{% static 'css/loading.css' %}" type="text/css">
+{% endblock %}
+
+{% block content %}
+<div>
+    {% csrf_token %}
+    <div>
+        <label name="label_user_id" for="{{ form.user_id.id_for_label }}">{{ form.user_id.label }}</label>
+        {{ form.user_id }}
+    </div>
+    <div>
+        <label name="label_name" for="{{ form.name.id_for_label }}">{{ form.name.label }}</label>
+        {{ form.name }}
+    </div>
+    <div>
+        <label name="label_email" for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+            {{ form.email }}
+        <small>
+            등록하신 메일로 인증번호가 발송됩니다.
+        </small>
+    </div>
+
+    <div id="div_find_pw">
+        <button id="find_pw" name="recovery_pw">비밀번호찾기</button>
+    </div>
+
+    <div id="result_pw"></div>
+</div>
+
+<script>
+    function countdown( elementName, minutes, seconds ) {
+    var elementName, endTime, hours, mins, msLeft, time;
+    function twoDigits( n ) {
+        return (n <= 9 ? "0" + n : n);
+    }
+    function updateTimer() {
+        msLeft = endTime - (+new Date);
+        if ( msLeft < 1000 ) {
+            alert("인증시간이 초과되었습니다.");
+            $("" + elementName).remove();
+            cert_ok = false;
+            certificationNum = false;
+            location.href = "{% url 'userinfo:recovery_pw' %}"
+        } else {
+            time = new Date( msLeft );
+            hours = time.getUTCHours();
+            mins = time.getUTCMinutes();
+            $("" + elementName).html((hours ? hours + ':' + twoDigits( mins ) : twoDigits(mins))
+            + ':' + twoDigits( time.getUTCSeconds()));
+            setTimeout( updateTimer, time.getUTCMilliseconds() + 500 );
+        }
+    }
+    endTime = (+new Date) + 1000 * (60*minutes + seconds) + 500;
+    updateTimer();
+}
+countdown("#timeset", 5, 0);
+</script>
+
+{% endblock content%}

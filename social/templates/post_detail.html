@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% if user.is_authenticated %}
 <h1>{{article.user}}의 게시물 디테일 페이지</h1>
 <p>제목 : {{article.title}} 글 :  {{article.article}}  </p> <br>
 {% if article.image %}

@@ -1,32 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    {% if user.is_authenticated %}
-        welcoem {{user.username}}
-        <a href="{% url 'userinfo:logout' %}">로그아웃</a><br><br>
-    {% else %}
-    <h1>index : 로그인 페이지 </h1>
-    
-    <form action="{% url 'userinfo:login' %}" method="POST">
-        {% csrf_token %}
-        <input type="text" name="userid" placeholder="아이디를 입력하세요">
-        <input type="password" name="password" placeholder="비밀번호를 입력하세요">
-        <button type="submit">로그인</button>
-    </form>
-    
-    <a href="{% url 'userinfo:send_email' %}">비밀번호 찾기</a>
-    
-    <a href="{% url 'userinfo:signup' %}">회원가입하기</a>
-    {% endif %}
-    
-</body>
-</html>
+{% extends 'base.html' %}
+{% block head %}
+{% endblock head %}
+{% block content %}
+<h1>index : 로그인 페이지 </h1>
+<form action="{% url 'userinfo:login' %}" method="POST">
+    {% csrf_token %}
+    <input type="text" name="userid" placeholder="아이디를 입력하세요">
+    <input type="password" name="password" placeholder="비밀번호를 입력하세요">
+    <button type="submit">로그인</button>
+</form>
+
+<a href="{% url 'userinfo:recovery_pw' %}">비밀번호 찾기</a>
 
 
-
+{% endblock content %}
