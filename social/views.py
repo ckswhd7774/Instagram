@@ -76,6 +76,29 @@ class PostDetailView(generic.DetailView) :
     context_object_name = 'article'
     template_name = 'post_detail.html'
 
+    def post(self, request, *args, **kwargs):
+        file = request.FILES.get('image')
+        session = Session(
+                aws_access_key_id=AWS_ACCESS_KEY_ID,
+                aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
+                region_name=AWS_S3_REGION_NAME,
+            )
+        s3 = session.resource('s3')
+        now = datetime.now().strftime('%Y%H%M%S')
+        img_object = s3.Bucket(AWS_STORAGE_BUCKET_NAME).put_object(
+                Key=now+file.name,
+                Body=file
+            )
+
+        s3_url = 'https://django-s3-cj.s3.ap-northeast-2.amazonaws.com/'
+        Article.objects.create(
+                title=request.POST['title'],
+                user = request.user,
+                article= request.POST.get('article'),
+                url = s3_url+now+file.name
+            )
+        
+        return render(request, 'post_detail.html')
 
 class EditView(View) :
     def get(self, request, *args, **kwargs) :
