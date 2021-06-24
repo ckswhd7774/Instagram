@@ -8,5 +8,6 @@
         <a href="{% url 'social:user_detail' user.pk %}">{{user}}</a>
     </li>
 </ul>
-{% endfor %}
+    {% endfor %}
+{% endif %}
 {% endblock content %}

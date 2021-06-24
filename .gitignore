@@ -1,0 +1,6 @@
+.env
+.json
+# created by virtualenv automatically
+db.sqlite3
+secrets.json
+media

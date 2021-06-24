@@ -12,4 +12,4 @@ urlpatterns = [
     path('', IndexTemplateView.as_view(), name='index'),
    
     
-] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+] # + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

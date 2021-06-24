@@ -11,6 +11,10 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 from pathlib import Path
 import os
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -149,10 +153,10 @@ STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#미디어 파일을 관리할 루트 media 디렉토리
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-# 각 media file에 대한 URL prefix
-MEDIA_URL = '/media/'
+# #미디어 파일을 관리할 루트 media 디렉토리
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# # 각 media file에 대한 URL prefix
+# MEDIA_URL = '/media/'
 
 # 이메일 전송
 # 메일을 호스트하는 서버
@@ -175,3 +179,10 @@ EMAIL_USE_TLS = True
 
 # 사이트와 관련한 자동응답을 받을 이메일 주소
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# AWS
+AWS_ACCESS_KEY_ID=env('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY=env('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME=env('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_REGION_NAME='ap-northeast-2'
+AWS_S3_OVERWRITE=False

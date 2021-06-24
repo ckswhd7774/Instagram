@@ -4,7 +4,7 @@
 <h1>{{article.user}}의 게시물 디테일 페이지</h1>
 <p>제목 : {{article.title}} 글 :  {{article.article}}  </p> <br>
 {% if article.image %}
-<img src="{{article.image.url}}" width="500px;" alt="{{article.title}}">
+<img src="{{article.url}}" width="500px;" alt="{{article.title}}">
 <h2>게시물 좋아요</h2>
 <form action="" method="POST">
     {% csrf_token %}
@@ -28,4 +28,5 @@
     <input type="text" name="content" placeholder="댓글">
     <button type="submit">댓글 달기</button>
 </form>
+{% endif %}
 {% endblock content %}

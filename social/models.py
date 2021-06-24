@@ -10,7 +10,8 @@ class Article(BaseFiled) :
     title = models.CharField(max_length=64)
     article = models.TextField()
     user = ForeignKey(User, on_delete=models.CASCADE, related_name='article', null=True, blank=True)
-    image = models.ImageField(upload_to='image/', blank=True, null=True)
+    # image = models.ImageField(upload_to='image/', blank=True, null=True)
+    url = models.TextField()
 
     def __str__(self):
         return (f"{self.id}" + "by " + self.user.username + "/" + self.title)
